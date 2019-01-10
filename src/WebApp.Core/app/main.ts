@@ -12,6 +12,7 @@ export class MainViewModel extends ViewModelBase {
   lastScannedId = ko.observable().extend({ throttle: 100 });
   loading = ko.observable(true);
   items = ko.observableArray<any>([]);
+  isOffline = ko.observable(false);
 
   currentComponent = ko
     .observable<string>()

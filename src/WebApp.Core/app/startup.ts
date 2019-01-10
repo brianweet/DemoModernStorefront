@@ -95,3 +95,12 @@ setTimeout(() => {
     }, 500);
   }
 };
+
+// Listen to online/offline events
+window.addEventListener("load", () => {
+  function handleNetworkChange() {
+    mainViewModel.isOffline(!navigator.onLine);
+  }
+  window.addEventListener("online", handleNetworkChange);
+  window.addEventListener("offline", handleNetworkChange);
+});
