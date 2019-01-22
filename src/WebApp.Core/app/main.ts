@@ -12,6 +12,7 @@ export class MainViewModel extends ViewModelBase {
   tracking = trackingFactory.get();
   lastScannedId = ko.observable().extend({ throttle: 100 });
   loading = ko.observable(true);
+  isOnline = ko.observable(navigator.onLine);
   items = ko.observableArray<any>([]);
 
   currentComponent = ko

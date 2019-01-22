@@ -70,6 +70,9 @@ ko.components.register("ar-page", {
   viewModel: ArViewModel,
   template: { require: "text!components/ar/ar-page.html" }
 });
+ko.components.register("online-status", {
+  template: { require: "text!components/online-status.html" }
+});
 
 // Start our app
 var mainViewModel = new MainViewModel();
@@ -94,3 +97,11 @@ setTimeout(() => {
 (<any>window).setCurrentComponent = (component: string) => {
   mainViewModel.currentComponent(component);
 };
+
+window.addEventListener("load", () => {
+  const updateOnlineStatus = event => {
+    mainViewModel.isOnline(navigator.onLine);
+  };
+  window.addEventListener("online", updateOnlineStatus);
+  window.addEventListener("offline", updateOnlineStatus);
+});
