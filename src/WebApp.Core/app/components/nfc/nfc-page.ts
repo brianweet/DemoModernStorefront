@@ -1,17 +1,18 @@
 /// <amd-dependency path="text!./nfc-page.html" />
 import * as ko from "knockout";
-import ViewModelBase from "./ViewModelBase";
+import ViewModelBase from "../ViewModelBase";
 
 export class NfcViewModel extends ViewModelBase {
-  nfcAccessStatus = ko.observable("unknown");
+  nfcAccessStatus = ko.observable(false);
+  nfcStatus = ko.observable("idle");
   newMessage = ko.observable<string>();
   messages = ko.observableArray<INfcMessage>([
-    new ReadMessage("Message's will appear here")
+    new ReadMessage("Messages will appear here")
   ]);
 
   constructor() {
     super();
-    this.nfcAccessStatus("nfc" in navigator ? "available" : "not available");
+    this.nfcAccessStatus("nfc" in navigator);
     this.readNfc();
   }
 
@@ -19,56 +20,51 @@ export class NfcViewModel extends ViewModelBase {
     var message = this.newMessage();
     this.newMessage("");
     $("#write-message").blur();
-    this.nfcAccessStatus(`waiting to write: ${message}`);
+    this.nfcStatus(`waiting to write: ${message}`);
 
     var nfcMessage = createNfcMessage(message);
 
-    (navigator as any).nfc
+    navigator.nfc
       .push(nfcMessage)
       .then(() => {
         consoleLog("Message pushed.", message);
         this.messages.unshift(new WriteMessage(`Write: ${message}`, true));
+        this.nfcStatus("idle");
       })
       .catch(error => {
         consoleLog("Message push failed.", message);
         this.messages.unshift(
           new WriteMessage(`Write failed: ${message}`, false)
         );
-      })
-      .finally(() => {
+        this.nfcStatus("idle");
+      });
+    /*.finally(() => {
         this.nfcAccessStatus("available");
         $("#message-list li")[0].scrollIntoView();
-      });
+      })*/
   }
+
+  processMessage = (message: NFCMessage) => {
+    console.log("NFC message received", message);
+    var items = message.records || message.data;
+    items.forEach(record => {
+      if (record.recordType === "text") {
+        console.log("Record type text: " + record.data);
+      }
+    });
+  };
 
   readNfc() {
     if ("nfc" in navigator) {
-      (navigator as any).nfc
-        .watch(
-          message => {
-            consoleLog("NFC message received", message);
-            var items = message.records || message.data;
-            items.forEach(record => {
-              if (record.recordType == "text") {
-                consoleLog("Record type text: " + record.data);
-                this.messages.unshift(new ReadMessage(`Read: ${record.data}`));
-              } else {
-                consoleLog("Record type unknown: " + record.data);
-              }
-            });
-            $("#message-list li")[0].scrollIntoView();
-          },
-          { mode: "any" }
-        )
-        .then(() => consoleLog("Added a watch."))
-        .catch(err => consoleLog("Adding watch failed: " + err.name));
-    } else {
-      consoleLog("NFC API not supported.");
+      navigator.nfc
+        .watch(this.processMessage, { mode: "any" })
+        .then(() => console.log("Added a watch."))
+        .catch(err => console.log("Adding watch failed: " + err.name));
     }
   }
 }
 
-function createNfcMessage(message: string) {
+function createNfcMessage(message: string): NFCMessage {
   return {
     records: [
       {
