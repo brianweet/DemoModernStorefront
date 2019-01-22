@@ -90,3 +90,7 @@ setTimeout(() => {
     }, 500);
   }
 };
+
+(<any>window).setCurrentComponent = (component: string) => {
+  mainViewModel.currentComponent(component);
+};
