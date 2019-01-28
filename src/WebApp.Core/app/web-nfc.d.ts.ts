@@ -14,17 +14,16 @@ interface NFCWatchOptions {
   url?: String; // domain/path or URL pattern
   kind?: String;
   type?: String;
-  mode?: "web-only" | "all" | "any";
+  mode?: "web-only" | "all" | "web-nfc-only" | "any";
 }
 
 interface NFCMessage {
-  records?: NFCRecord[];
-  data?: NFCRecord[];
+  records: NFCRecord[];
   url?: String;
 }
 
 interface NFCRecord {
   recordType: "empty" | "text" | "url" | "json" | "opaque";
   mediaType: String;
-  data: null | String | ArrayBuffer;
+  data: null | string | ArrayBuffer;
 }

@@ -5,14 +5,17 @@
     <div class="mdl-card__supporting-text">
         <!-- ko if: $data.nfcAccessStatus -->
         <span class="mdl-chip" style="background-color: #4caf50bd;font-weight: bolder;">
-            <span class="mdl-chip__text">NFC status: available! - <!-- ko text: $data.nfcStatus --><!--/ko--></span>
+            <span class="mdl-chip__text">NFC status: available!</span>
         </span>
         <!-- /ko -->
         <!-- ko ifnot: $data.nfcAccessStatus -->
         <span class="mdl-chip" style="background-color: #af4e4c;font-weight: bolder;">
-            <span class="mdl-chip__text">NFC status: not available - <!-- ko text: $data.nfcStatus --><!--/ko--></span>
+            <span class="mdl-chip__text">NFC status: not available</span>
         </span>
         <!-- /ko -->
+        <div>
+        <!-- ko text: $data.nfcStatus --><!--/ko-->
+        </div>
         <ul
             id="message-list"
             class="mdl-list"

@@ -23,7 +23,6 @@ export class NfcViewModel extends ViewModelBase {
     this.nfcStatus(`waiting to write: ${message}`);
 
     var nfcMessage = createNfcMessage(message);
-
     navigator.nfc
       .push(nfcMessage)
       .then(() => {
@@ -38,18 +37,15 @@ export class NfcViewModel extends ViewModelBase {
         );
         this.nfcStatus("idle");
       });
-    /*.finally(() => {
-        this.nfcAccessStatus("available");
-        $("#message-list li")[0].scrollIntoView();
-      })*/
   }
 
   processMessage = (message: NFCMessage) => {
     console.log("NFC message received", message);
-    var items = message.records || message.data;
-    items.forEach(record => {
+    message.records.forEach(record => {
       if (record.recordType === "text") {
-        console.log("Record type text: " + record.data);
+        if (typeof record.data === "string") {
+          this.messages.unshift(new ReadMessage(record.data));
+        }
       }
     });
   };
@@ -57,7 +53,7 @@ export class NfcViewModel extends ViewModelBase {
   readNfc() {
     if ("nfc" in navigator) {
       navigator.nfc
-        .watch(this.processMessage, { mode: "any" })
+        .watch(this.processMessage, { mode: "web-nfc-only" })
         .then(() => console.log("Added a watch."))
         .catch(err => console.log("Adding watch failed: " + err.name));
     }
@@ -66,6 +62,7 @@ export class NfcViewModel extends ViewModelBase {
 
 function createNfcMessage(message: string): NFCMessage {
   return {
+    url: "",
     records: [
       {
         recordType: "text",
