@@ -78,7 +78,7 @@ gulp.task("compile:ts", function() {
     .pipe(gulp.dest("app"));
 });
 
-gulp.task("copy:js", function() {
+gulp.task("copy:js", ["compile:ts"], function() {
   return gulp
     .src(["app/**/*.js"])
     .pipe(sourcemaps.write({ sourceRoot: "/app" }))
