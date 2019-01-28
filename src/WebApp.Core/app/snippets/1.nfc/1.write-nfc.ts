@@ -1,35 +1,22 @@
 export class WriteNfc {
-  constructor() {
-    this.writeNfc("Write a message to an NFC tag");
-  }
-  writeNfc(message: string) {
+  writeNfc(productCode: string) {
     if ("nfc" in navigator) {
-      var nfcMessage = this.createNfcMessage(message);
+      const nfcMessage = this.createNfcMessage(productCode);
       navigator.nfc
         .push(nfcMessage)
-        .then(() => console.log("Added a watch."))
-        .catch(err => console.log("Adding watch failed: " + err.name));
+        .then(() => console.log("Wrote product code to NFC tag."))
+        .catch(err => console.log("Something went wrong: " + err.name));
     }
   }
-  createNfcMessage(message: string): NFCMessage {
+  createNfcMessage(productCode: string): NFCMessage {
     return {
       records: [
         {
           recordType: "text",
           mediaType: "text/plain",
-          data: message || "Empty message"
+          data: productCode
         }
       ]
     };
   }
 }
-
-var nfcRecord = {
-  recordType: "text",
-  mediaType: "text/plain",
-  data: "Empty message"
-};
-var nfcMessage = {
-  url: "",
-  data: [nfcRecord]
-};

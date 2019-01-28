@@ -1,8 +1,5 @@
 export class ReadNfc {
-  constructor() {
-    this.readNfc();
-  }
-  readNfc() {
+  watchForNfcMessages() {
     if ("nfc" in navigator) {
       navigator.nfc
         .watch(this.processMessage, { mode: "web-nfc-only" })
@@ -11,10 +8,10 @@ export class ReadNfc {
     }
   }
   processMessage = (message: NFCMessage) => {
-    console.log("NFC message received", message);
     message.records.forEach(record => {
       if (record.recordType === "text") {
-        console.log("Record type text: " + record.data);
+        const productCode = record.data;
+        console.log(`Read tag with Product Code: ${productCode}`);
       }
     });
   };
