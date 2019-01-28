@@ -56,7 +56,7 @@ const run = () => {
     paymentOptions
   );
 
-  const canMakePayment = paymentRequest.canMakePayment();
+  const canMakePayment = (paymentRequest as any).canMakePayment();
   if (!canMakePayment) {
     alert("No supported payment methods, customer can't do payment");
   }

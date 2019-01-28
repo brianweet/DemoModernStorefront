@@ -58,7 +58,7 @@
       "propertyDataType": "PropertyXhtmlString"
     },
     "mainImage": {
-      "value": "http:\/\/modernstorefront-quicksilver.localtest.me\/\/globalassets\/stores\/welcome-in-store.jpg",
+      "value": "http:\/\/localhost:9090\/\/globalassets\/stores\/welcome-in-store.jpg",
       "propertyDataType": "PropertyUrl"
     },
     "introductionTour": {
@@ -118,7 +118,7 @@
             "propertyDataType": "PropertyXhtmlString"
           },
           "mainImage": {
-            "value": "http:\/\/modernstorefront-quicksilver.localtest.me\/\/globalassets\/stores\/product-nfc.jpg",
+            "value": "http:\/\/localhost:9090\/\/globalassets\/stores\/product-nfc.jpg",
             "propertyDataType": "PropertyUrl"
           }
         },
@@ -177,7 +177,7 @@
             "propertyDataType": "PropertyXhtmlString"
           },
           "mainImage": {
-            "value": "http:\/\/modernstorefront-quicksilver.localtest.me\/\/globalassets\/stores\/clickandcollect.jpg",
+            "value": "http:\/\/localhost:9090\/\/globalassets\/stores\/clickandcollect.jpg",
             "propertyDataType": "PropertyUrl"
           }
         },
@@ -236,7 +236,7 @@
             "propertyDataType": "PropertyXhtmlString"
           },
           "mainImage": {
-            "value": "http:\/\/modernstorefront-quicksilver.localtest.me\/\/globalassets\/stores\/myorders.jpg",
+            "value": "http:\/\/localhost:9090\/\/globalassets\/stores\/myorders.jpg",
             "propertyDataType": "PropertyUrl"
           }
         },
@@ -295,7 +295,7 @@
             "propertyDataType": "PropertyXhtmlString"
           },
           "mainImage": {
-            "value": "http:\/\/modernstorefront-quicksilver.localtest.me\/\/globalassets\/stores\/wishlist.jpg",
+            "value": "http:\/\/localhost:9090\/\/globalassets\/stores\/wishlist.jpg",
             "propertyDataType": "PropertyUrl"
           }
         }
